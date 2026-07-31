@@ -2,4 +2,4 @@ module github.com/vibrantgio/circle
 
 go 1.24.1
 
-require gioui.org v0.9.0
+require gioui.org v0.10.1
