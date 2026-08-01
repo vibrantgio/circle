@@ -1,7 +1,7 @@
 # circle
 
 A circle drawn as four cubic Bézier segments, for
-[VibrantGio](https://github.com/vibrantgio), a design system for native desktop
+[Vibrant Gio](https://github.com/vibrantgio), a design system for native desktop
 applications on macOS, Windows and Linux, written in pure Go on
 [Gio](https://gioui.org). Three functions, no state.
 
