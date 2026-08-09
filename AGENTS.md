@@ -5,8 +5,14 @@ A circle drawn as four cubic Bézier segments: `CirclePath` returns the
 `layout.Widget`. The Bézier constant is Spencer Mortensen's
 0.5519150244935105, not the 0.55228475 usually quoted.
 
-**Layer.** Tier 0 of ADR-001's table — a leaf whose only dependency is Gio.
-`mvu/example` and `traer/gio` use it; nothing in the design system does.
+**Layer.** Tier 0 of ADR-001's table — a leaf whose only dependency outside
+the organization is Gio. Its root module imports nothing else in the
+organization. No other repository's root module imports it; outside the
+tier table it is imported by the demo module `mvu/example` and the adapter
+module `traer/gio`. Both directions are measured rather than typed —
+`scripts/check-layers.sh --edges` reports the graph and
+`scripts/sync-agents.sh` renders these sentences from it — so correcting
+them here changes nothing.
 
 **Read the canonical guide before you write code against this module.** It is
 the organization's one agent guide — the module inventory with current tags,
