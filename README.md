@@ -28,7 +28,7 @@ the better constant for a circle you will scale.
 
 ## Where it sits
 
-Tier 0 of the stack — `mvu → theme → components → pulse → cadence → markdown` —
+Tier 0 of the stack — `mvu → theme → components → effects → cadence → markdown` —
 a leaf whose only dependency is Gio. The
 [organization page](https://github.com/vibrantgio) has the full tier table.
 
@@ -119,7 +119,7 @@ Honest about what does not work yet. Every count below is measured.
   hard-coded as a closed loop, so there is no way to draw three quarters of a
   circle, an ellipse with different radii, or an outline of a given width. A
   ring today is two filled circles, the inner one in the background colour.
-- **Nothing in the design system uses it.** components, pulse, cadence, markdown and
+- **Nothing in the design system uses it.** components, effects, cadence, markdown and
   theme all draw their own shapes; the consumers are `mvu/example/circles`
   and the four `traer/gio` demos. No component in the stack renders a circle
   through this module, so its behaviour under the theme, at high DPI, and
