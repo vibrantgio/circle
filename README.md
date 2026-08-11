@@ -28,7 +28,7 @@ the better constant for a circle you will scale.
 
 ## Where it sits
 
-Tier 0 of the stack — `mvu → spectrum → prism → pulse → cadence → markdown` —
+Tier 0 of the stack — `mvu → theme → prism → pulse → cadence → markdown` —
 a leaf whose only dependency is Gio. The
 [organization page](https://github.com/vibrantgio) has the full tier table.
 
@@ -120,7 +120,7 @@ Honest about what does not work yet. Every count below is measured.
   circle, an ellipse with different radii, or an outline of a given width. A
   ring today is two filled circles, the inner one in the background colour.
 - **Nothing in the design system uses it.** prism, pulse, cadence, markdown and
-  spectrum all draw their own shapes; the consumers are `mvu/example/circles`
+  theme all draw their own shapes; the consumers are `mvu/example/circles`
   and the four `traer/gio` demos. No component in the stack renders a circle
   through this module, so its behaviour under the theme, at high DPI, and
   against the golden-image tests the rest of the stack has is entirely
