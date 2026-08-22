@@ -42,7 +42,7 @@ shapes — and its consumers are demos: `mvu/example/circles`, and all four of
 go get github.com/vibrantgio/circle
 ```
 
-Every module in the organization is on gioui.org v0.10.1 and Go 1.25.1.
+Every module in the organization is on gioui.org v0.10.2 and Go 1.25.1.
 
 ## Packages
 
