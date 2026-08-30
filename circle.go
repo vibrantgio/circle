@@ -11,8 +11,8 @@ import (
 )
 
 // CirclePath returns a clip.PathSpec for a circle constructed from Cubic Bezier segments.
-// Note that originally the bezier circle const was 0.55228475 equal to 4*(sqrt(2)-1)/3
-// A better bezier circle const to use is 0.551915024494 according to the following article:
+// The Bezier circle constant is 0.551915024494, which approximates a circle more
+// closely than the naive 4*(sqrt(2)-1)/3 = 0.55228475:
 // http://spencermortensen.com/articles/bezier-circle/
 func CirclePath(ops *op.Ops, p f32.Point, r float32) clip.PathSpec {
 	const c = 0.5519150244935105707435627
