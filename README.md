@@ -101,14 +101,14 @@ typography, and the pitfalls that are not guessable:
 
 Honest about what does not work yet. Every count below is measured.
 
-- **`Circle`, the widget, has no consumer anywhere in the organization.** Every
+- **`Circle`, the component, has no consumer anywhere in the organization.** Every
   one of the five call sites uses `CirclePath` (three) or `FillCircle` (two);
   the `layout.Widget` form has never been called. It is also the one form with
   a design problem: it returns `layout.Dimensions{Size: gtx.Constraints.Max}`
   whatever the radius is, and its centre `p` is an absolute point in the
-  widget's own coordinate space rather than a position within the space it was
+  component's own coordinate space rather than a position within the space it was
   given. So in a flex it claims all the room and draws wherever it was told,
-  which is not what a widget is for. Use `FillCircle` inside a widget you wrote.
+  which is not what a component is for. Use `FillCircle` inside a component you wrote.
 - **Gio can already do this, less precisely.** `clip.Ellipse` is an
   `image.Rectangle` and gives you an axis-aligned ellipse inscribed in it. For
   a static circle in a layout that is the simpler call and this module adds
