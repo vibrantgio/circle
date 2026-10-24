@@ -14,9 +14,7 @@ scaled scene snap between sizes.
 
 `CirclePath` takes an `f32.Point` centre and a `float32` radius and returns a
 `clip.PathSpec`, so the geometry stays in floating point all the way to the
-rasteriser. It is the reason
-[traer](https://github.com/vibrantgio/traer)'s particle demos render smoothly
-under continuous zoom.
+rasteriser, and a circle drawn from it stays smooth under continuous zoom.
 
 The Bézier constant is the other reason this module exists. Approximating a
 quarter circle with a cubic needs a control-point offset of *c·r*, and the
@@ -34,15 +32,13 @@ a leaf whose only dependency is Gio. The
 
 It sits alongside [backdrop](https://github.com/vibrantgio/backdrop) and
 [gradient](https://github.com/vibrantgio/gradient), the other two drawing
-leaves. Nothing inside the design system imports it — components draws its own
-shapes — and its consumers are demos: `mvu/example/circles`, and all four of
-[traer](https://github.com/vibrantgio/traer)'s `gio` particle programs.
+leaves.
 
 ```sh
 go get github.com/vibrantgio/circle
 ```
 
-Every module in the organization is on gioui.org v0.10.2 and Go 1.25.1.
+The Gio and Go versions are the ones `go.mod` names.
 
 ## Packages
 
@@ -56,10 +52,9 @@ One package, at the module root.
 
 ## Usage
 
-The path is the interesting one, because it composes. This is
-`traer/gio/arboretum`, drawing the root node of a spring-laid-out tree: the
-particle's position and the current zoom are both floats, and neither is
-rounded on the way to the rasteriser.
+The path is the interesting one, because it composes. This draws the root
+node of a spring-laid-out tree: the particle's position and the current zoom
+are both floats, and neither is rounded on the way to the rasteriser.
 
 ```go
 particle := ps.Particles[0]
@@ -74,9 +69,8 @@ Pushing the clip yourself is what buys you the composition — anything painted
 between the push and the pop is masked by the circle, so the same call fills
 with a solid, a gradient or an image.
 
-When you just want a disc, `FillCircle` is the whole thing. From
-`mvu/example/circles`, which grows a circle under the pointer while it is
-dragged:
+When you just want a disc, `FillCircle` is the whole thing. This draws
+circles that grow under the pointer while it is dragged:
 
 ```go
 for _, c := range circles {
@@ -91,42 +85,32 @@ no rounding, and the circle tracks the cursor sub-pixel.
 
 Read the org guide before you write code against this module: the plan
 root's [`AGENTS.md`](https://github.com/vibrantgio/organisation/blob/master/AGENTS.md).
-
-[`AGENTS.md`](./AGENTS.md) in this repository has the build and test commands.
+The build and test commands are reached from that file.
 
 ## Status
 
-Honest about what does not work yet. Every count below is measured.
+Honest about what does not work yet.
 
-- **`Circle`, the component, has no consumer anywhere in the organization.** Every
-  one of the five call sites uses `CirclePath` (three) or `FillCircle` (two);
-  the `layout.Widget` form has never been called. It is also the one form with
-  a design problem: it returns `layout.Dimensions{Size: gtx.Constraints.Max}`
-  whatever the radius is, and its centre `p` is an absolute point in the
+- **`Circle`, the `layout.Widget` form, has a design problem.** It
+  returns `layout.Dimensions{Size: gtx.Constraints.Max}` whatever the radius
+  is, and its centre `p` is an absolute point in the
   component's own coordinate space rather than a position within the space it was
-  given. So in a flex it claims all the room and draws wherever it was told,
+  given. So in a flex it claims all the space and draws wherever it was told,
   which is not what a component is for. Use `FillCircle` inside a component you wrote.
 - **Gio can already do this, less precisely.** `clip.Ellipse` is an
   `image.Rectangle` and gives you an axis-aligned ellipse inscribed in it. For
   a static circle in a layout that is the simpler call and this module adds
-  nothing; the float32 centre and radius are the whole reason to reach for
-  `CirclePath` instead. Nothing in the repository says so, and there is no
-  benchmark comparing them.
+  nothing; the float32 centre and radius are the whole reason to use
+  `CirclePath` instead. There is no benchmark comparing them.
 - **Circles only — no arcs, no ellipses, no strokes.** The four cubics are
   hard-coded as a closed loop, so there is no way to draw three quarters of a
   circle, an ellipse with different radii, or an outline of a given width. A
   ring today is two filled circles, the inner one in the background colour.
-- **Nothing in the design system uses it.** components, effects, patterns, markdown and
-  theme all draw their own shapes; the consumers are `mvu/example/circles`
-  and the four `traer/gio` demos. No component in the stack renders a circle
-  through this module, so its behaviour under the theme, at high DPI, and
-  against the golden-image tests the rest of the stack has is entirely
-  unexercised.
 - **The Bézier claim is not tested.** The constant is right and the comment
   explaining it is right, but nothing measures the resulting radial error, and
   `go test ./...` reports "no test files". The precision this module exists for
   is asserted, not pinned.
-- **There is no LICENSE file.** Eighteen of the organization's twenty
-  repositories ship one — MIT for most, BSD, Apache or Unlicense for the ported
-  libraries. This one and [gradient](https://github.com/vibrantgio/gradient)
-  are the two that do not, and no phase of the current plan adds them.
+
+## License
+
+MIT — see [LICENSE](./LICENSE).
